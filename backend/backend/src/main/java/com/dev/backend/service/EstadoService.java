@@ -20,7 +20,7 @@ public class EstadoService {
     }
 
     public Estado inserir(Estado estado) {
-        estado.setDataCricao(new Date());        
+        estado.setDataCriacao(new Date());        
         Estado estadoNovo = estadoRepository.saveAndFlush(estado);
         return estadoNovo;
     }
