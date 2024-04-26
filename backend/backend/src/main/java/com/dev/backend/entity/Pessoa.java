@@ -3,7 +3,6 @@ package com.dev.backend.entity;
 import java.util.Date;
 import java.util.List;
 
-import org.hibernate.validator.constraints.br.CPF;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -16,7 +15,6 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
-import jakarta.validation.constraints.Email;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Setter;
@@ -32,11 +30,13 @@ public class Pessoa {
 
     private String nome;
 
-    @CPF
     private String cpf;
 
-    @Email
     private String email;
+
+    private String codigoRecuperacaoSenha;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataEnvioCodigo;
 
     private String senha;
 
