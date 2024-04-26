@@ -29,7 +29,27 @@ public class PessoaGerenciamentoService {
                 "O seu código é o seguinte" + pessoa.getCodigoRecuperacaoSenha());
 
         return "Código enviado!";
+    }
 
+    public String alterarSenha(Pessoa pessoa) {
+
+        Pessoa pessoaBanco = pessoaRepository.findByEmailAndCodigoRecuperacaoSenha(pessoa.getEmail(),
+                pessoa.getCodigoRecuperacaoSenha());
+        if (pessoaBanco != null) {
+            Date diferenca = new Date(new Date().getTime() - pessoaBanco.getDataEnvioCodigo().getTime());
+
+            if (diferenca.getTime() / 1000 < 900) {
+                //spring security
+                pessoaBanco.setSenha(pessoa.getSenha());
+                pessoaBanco.setCodigoRecuperacaoSenha(null);
+                pessoaRepository.saveAndFlush(pessoaBanco);
+                return "Senha alterada";
+            } else {
+                return "Tempo expirado";
+            }
+        } else {
+            return "Email ou codigo não encontrado!";
+        }
     }
 
     private String getCodigoRecuperacaoSenha(Long id) {
